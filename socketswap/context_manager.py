@@ -9,7 +9,7 @@ import time
 #     start_local_proxy(*args)
 
 
-class ProxySwapContext:
+class SocketSwapContext:
     
     def __init__(self, *args):
         self.args = args
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # for testing
     
     
-    with ProxySwapContext(conn_factory, "127.0.0.1", 2222):
+    with SocketSwapContext(conn_factory, "127.0.0.1", 2222):
         for i in range(1000):
             print(i)
             time.sleep(3)

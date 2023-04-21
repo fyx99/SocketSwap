@@ -10,11 +10,11 @@ __credits__ = 'No credits'
 
 import socketswap.proxy 
 from socketswap.proxy import start_local_proxy
-from socketswap.context_manager import ProxySwapContext
+from socketswap.context_manager import SocketSwapContext
 
 __all__ = [
     socketswap.proxy,
     start_local_proxy,
     
-    ProxySwapContext
+    SocketSwapContext
 ]
