@@ -1,11 +1,12 @@
-
+"""
+Demo Szenario - Connecting a postgres client via SocketSwap
+"""
+import socket
 import psycopg2
-
-from socketswap import ProxySwapContext
+from socketswap import SocketSwapContext
 
 
 def conn_factory():
-    import socket
     target_host = "localhost"
     target_port = 5432
     remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -13,8 +14,13 @@ def conn_factory():
     return remote_socket
 
 def connect_postgres():
+    """
+    This function demos how to easily setup the local proxy using the SocketSwapContext-Manager.
+    It exposes a local proxy on the localhost 127.0.0.1 on port 2222
+    The connection factory is provided to handle the creation of a socket to the remote target
+    """
     
-    with ProxySwapContext(conn_factory, "127.0.0.1", 2222):
+    with SocketSwapContext(conn_factory, "127.0.0.1", 2222):
         # Set up a connection to the PostgreSQL database
         conn = psycopg2.connect(
             host="127.0.0.1",
@@ -24,28 +30,4 @@ def connect_postgres():
             port=2222
         )
 
-        # Create a cursor object to execute SQL queries
-        cur = conn.cursor()
-
-        # Execute a SELECT query to retrieve data from a table
-        cur.execute("SELECT CURRENT_TIMESTAMP;")
-
-        # Fetch all the rows returned by the query
-        rows = cur.fetchall()
-
-        # Print the rows to the console
-        for row in rows:
-            print(row)
-
-        # Close the cursor and connection
-        cur.close()
-        conn.close()
-
-
-
-
-
-
-if __name__ == '__main__':
-    # for testing
-    connect_postgres()
+        # ... postgres stuff
