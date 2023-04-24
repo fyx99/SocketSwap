@@ -1,7 +1,8 @@
 """
 Demo Szenario - Connecting a postgres client via SocketSwap - redirect traffic locally
 
-Setup: docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=postgres postgres:latest
+Setup: 
+    docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=postgres postgres:latest
 """
 import socket
 import psycopg2
