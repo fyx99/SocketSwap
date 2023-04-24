@@ -1,9 +1,11 @@
 """
 Demo Szenario - Connecting a postgres client via SocketSwap
+
+Setup: docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=postgres postgres:latest
 """
 import socket
 import psycopg2
-from socketswap import SocketSwapContext
+from SocketSwap import SocketSwapContext 
 
 
 def conn_factory():
@@ -20,14 +22,38 @@ def connect_postgres():
     The connection factory is provided to handle the creation of a socket to the remote target
     """
     
-    with SocketSwapContext(conn_factory, "127.0.0.1", 2222):
+    with SocketSwapContext(conn_factory, "0.0.0.0", 2223):
         # Set up a connection to the PostgreSQL database
         conn = psycopg2.connect(
             host="127.0.0.1",
             database="postgres",
             user="postgres",
             password="password",
-            port=2222
+            port=2223
         )
 
-        # ... postgres stuff
+        # Create a cursor object to execute SQL queries
+        cur = conn.cursor()
+
+        # Execute a SELECT query to retrieve data from a table
+        cur.execute("SELECT CURRENT_TIMESTAMP;")
+
+        # Fetch all the rows returned by the query
+        rows = cur.fetchall()
+
+        # Print the rows to the console
+        for row in rows:
+            print(row)  # prints the current_timestamp from the database
+
+        # Close the cursor and connection
+        cur.close()
+        conn.close()
+
+
+
+
+
+
+if __name__ == '__main__':
+    # for testing
+    connect_postgres()

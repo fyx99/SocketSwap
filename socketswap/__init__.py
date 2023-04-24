@@ -8,13 +8,11 @@ __version__ = "0.1.0"
 __author__ = 'fyx99'
 __credits__ = 'No credits'
 
-import socketswap.proxy 
-from socketswap.proxy import start_local_proxy
-from socketswap.context_manager import SocketSwapContext
+from SocketSwap.context_manager import SocketSwapContext
+from SocketSwap.proxy import start_local_proxy
+
 
 __all__ = [
-    socketswap.proxy,
-    start_local_proxy,
-    
-    SocketSwapContext
+    SocketSwapContext,
+    start_local_proxy
 ]

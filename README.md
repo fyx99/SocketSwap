@@ -16,7 +16,7 @@ There are two ways to use SwapSock.
 
 ```python 
 import socket
-from socketswap import ProxySwapContext
+from SocketSwap import ProxySwapContext
 
 
 def conn_factory():
@@ -30,6 +30,7 @@ def main():
     
     with ProxySwapContext(conn_factory, "127.0.0.1", 2222):
         # do something you want to proxy
+        # connect to 127.0.0.1:2222
 
 ```
 The ProxySwapContext takes essentially 3 mandatory arguments.  
