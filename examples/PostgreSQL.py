@@ -1,5 +1,5 @@
 """
-Demo Szenario - Connecting a postgres client via SocketSwap
+Demo Szenario - Connecting a postgres client via SocketSwap - redirect traffic locally
 
 Setup: docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=postgres postgres:latest
 """
@@ -19,7 +19,7 @@ def connect_postgres():
     """
     This function demos how to easily setup the local proxy using the SocketSwapContext-Manager.
     It exposes a local proxy on the localhost 127.0.0.1 on port 2222
-    The connection factory is provided to handle the creation of a socket to the remote target
+    The socket_factory is provided to handle the creation of a socket to the remote target
     """
     
     with SocketSwapContext(socket_factory, "0.0.0.0", 2223):

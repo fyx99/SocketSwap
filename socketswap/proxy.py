@@ -192,8 +192,7 @@ def proxy_thread(socket_factory: Callable[[], socket.socket], local_socket: sock
     except socket.error as socket_error:
         
         logger.error(f"SOCKET ERROR connecting remote socket: {socket_error}")
-        for s in [remote_socket, local_socket]:
-            s.close()
+        local_socket.close()
             
         # TODO braucht man hier den noch? (errno.errorcode[errnumber], os.strerror(errnumber))
         if socket_error.errno not in (errno.ETIMEDOUT, errno.ECONNREFUSED):
@@ -304,6 +303,13 @@ def start_local_proxy(socket_factory, local_host, local_port, server_key=None, s
 
 
 def stop_local_proxy():
+    """
+    Stops the local proxy server by closing the listening socket.
+
+    Note:
+    This function uses a global variable proxy_socket to store the socket object. If proxy_socket is not defined
+    or is already closed, no action will be taken.
+    """
     global proxy_socket
     try:
         if proxy_socket:
