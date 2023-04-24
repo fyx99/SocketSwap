@@ -8,7 +8,7 @@ import psycopg2
 from SocketSwap import SocketSwapContext 
 
 
-def conn_factory():
+def socket_factory():
     target_host = "localhost"
     target_port = 5432
     remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,7 +22,7 @@ def connect_postgres():
     The connection factory is provided to handle the creation of a socket to the remote target
     """
     
-    with SocketSwapContext(conn_factory, "0.0.0.0", 2223):
+    with SocketSwapContext(socket_factory, "0.0.0.0", 2223):
         # Set up a connection to the PostgreSQL database
         conn = psycopg2.connect(
             host="127.0.0.1",
