@@ -256,7 +256,7 @@ def proxy_thread(socket_factory: Callable[[], socket.socket], local_socket: sock
            
 
 
-def start_local_proxy(connect_socket, local_host, local_port, server_key=None, server_certificate=None, client_key=None, client_certificate=None, use_ssl=False):
+def start_local_proxy(socket_factory, local_host, local_port, server_key=None, server_certificate=None, client_key=None, client_certificate=None, use_ssl=False):
     """starts a local proxy server"""
     global proxy_socket
     logger.info("Starting local proxy server")
@@ -294,7 +294,7 @@ def start_local_proxy(connect_socket, local_host, local_port, server_key=None, s
             logger.info( 'Connection from %s:%d' % in_addrinfo)
             pthread = threading.Thread(
                 target=proxy_thread, 
-                args=(connect_socket, in_socket, use_ssl, server_key, server_certificate, client_key, client_certificate)
+                args=(socket_factory, in_socket, use_ssl, server_key, server_certificate, client_key, client_certificate)
             )
             logger.info(f"Starting proxy thread {pthread.name}")
             pthread.start()

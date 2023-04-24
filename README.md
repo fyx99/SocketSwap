@@ -19,7 +19,7 @@ import socket
 from SocketSwap import ProxySwapContext
 
 
-def conn_factory():
+def socket_factory():
     target_host = "localhost"
     target_port = 5432
     remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,7 +28,7 @@ def conn_factory():
 
 def main():
     
-    with ProxySwapContext(conn_factory, "127.0.0.1", 2222):
+    with ProxySwapContext(socket_factory, "127.0.0.1", 2222):
         # do something you want to proxy
         # connect to 127.0.0.1:2222
 
