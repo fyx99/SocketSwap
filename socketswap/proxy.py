@@ -8,13 +8,11 @@ import ssl
 import select
 import errno
 import logging
+from logging.handlers import QueueHandler
 from typing import Callable, List
 
-logger = logging.getLogger("SocketSwap")
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
 
-
+logger = None
 proxy_socket = None
 
 def is_valid_ip4(ip):
@@ -199,6 +197,7 @@ def proxy_thread(socket_factory: Callable[[], socket.socket], local_socket: sock
             raise socket_error
         return None
         
+    logger.info("Remote Socket connected successfully")
     
     running = True
     while running:
@@ -255,9 +254,15 @@ def proxy_thread(socket_factory: Callable[[], socket.socket], local_socket: sock
            
 
 
-def start_local_proxy(socket_factory, local_host, local_port, server_key=None, server_certificate=None, client_key=None, client_certificate=None, use_ssl=False):
+def start_local_proxy(log_queue, socket_factory, local_host, local_port, server_key=None, server_certificate=None, client_key=None, client_certificate=None, use_ssl=False):
     """starts a local proxy server"""
     global proxy_socket
+    global logger
+    
+    logger = logging.getLogger("SocketSwapProxy")
+    logger.addHandler(QueueHandler(log_queue))
+    logger.setLevel(logging.DEBUG)
+    
     logger.info("Starting local proxy server")
     
     if ((client_key is None) ^ (client_certificate is None)):
@@ -300,6 +305,7 @@ def start_local_proxy(socket_factory, local_host, local_port, server_key=None, s
     except KeyboardInterrupt as e:
         logger.info(e)
         sys.exit(0)
+
 
 
 def stop_local_proxy():

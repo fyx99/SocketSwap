@@ -35,6 +35,20 @@ def main():
 ```
 The ProxySwapContext takes essentially 3 mandatory arguments.  
 
+
+#### Logging and Debugging
+```python 
+from SocketSwap import ProxySwapContext
+
+# debug level logging
+import logging
+socket_swap_logger = logging.getLogger("SocketSwap")
+socket_swap_logger.addHandler(logging.StreamHandler())
+socket_swap_logger.setLevel(logging.DEBUG)
+
+```
+By default logging is not enabled. You can do so by assigning a handler to the "SocketSwap" logger and choosing a level.
+
 ## Credits:
 
 The TCP Proxy part is a slim modified version of https://github.com/ickerwx/tcpproxy.
