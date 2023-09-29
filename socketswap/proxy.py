@@ -183,10 +183,10 @@ def starttls(use_ssl: bool, local_socket: socket.socket, read_sockets: List[sock
             )
 
 
-def proxy_thread(socket_factory: Callable[[], socket.socket], local_socket: socket.socket, use_ssl: bool, server_key: str, server_certificate: str, client_key: str, client_certificate: str):
+def proxy_thread(socket_factory: Callable[[], socket.socket], socket_factory_args, local_socket: socket.socket, use_ssl: bool, server_key: str, server_certificate: str, client_key: str, client_certificate: str):
     """handles each connection read/write in a seperate thread"""
     try:
-        remote_socket = socket_factory()
+        remote_socket = socket_factory(*socket_factory_args)
     except socket.error as socket_error:
         
         logger.error(f"SOCKET ERROR connecting remote socket: {socket_error}")
@@ -254,7 +254,7 @@ def proxy_thread(socket_factory: Callable[[], socket.socket], local_socket: sock
            
 
 
-def start_local_proxy(log_queue, socket_factory, local_host, local_port, server_key=None, server_certificate=None, client_key=None, client_certificate=None, use_ssl=False):
+def start_local_proxy(log_queue, socket_factory, socket_factory_args, local_host, local_port, server_key=None, server_certificate=None, client_key=None, client_certificate=None, use_ssl=False):
     """starts a local proxy server"""
     global proxy_socket
     global logger
@@ -298,7 +298,7 @@ def start_local_proxy(log_queue, socket_factory, local_host, local_port, server_
             logger.info( 'Connection from %s:%d' % in_addrinfo)
             pthread = threading.Thread(
                 target=proxy_thread, 
-                args=(socket_factory, in_socket, use_ssl, server_key, server_certificate, client_key, client_certificate)
+                args=(socket_factory, socket_factory_args, in_socket, use_ssl, server_key, server_certificate, client_key, client_certificate)
             )
             logger.info(f"Starting proxy thread {pthread.name}")
             pthread.start()
