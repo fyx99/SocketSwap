@@ -28,12 +28,16 @@ def socket_factory():
 
 def main():
     
-    with ProxySwapContext(socket_factory, "127.0.0.1", 2222):
+    with ProxySwapContext(socket_factory, socket_factory_args, "127.0.0.1", 2222):
         # do something you want to proxy
         # connect to 127.0.0.1:2222
 
 ```
-The ProxySwapContext takes essentially 3 mandatory arguments.  
+The ProxySwapContext takes essentially 4 mandatory arguments.  
+The socket_factory - a function returning a socket.
+The socket_factory_args - a iterable containing the arguments for the socket_factory.
+The local_proxy_host - a host to bind for the local proxy typically localhost (127.0.0.1)
+The local_proxy_port - a port to bind for the local proxy
 
 
 #### Logging and Debugging

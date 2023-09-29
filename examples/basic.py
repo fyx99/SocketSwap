@@ -27,7 +27,7 @@ def basic_traffic_redirect():
     The socket_factory is provided to handle the creation of a socket to the remote target
     """
     
-    with SocketSwapContext(socket_factory, "127.0.0.1", 2222):
+    with SocketSwapContext(socket_factory, [], "127.0.0.1", 2222):
         # Set up a connection to the PostgreSQL database
         target_host = "127.0.0.1"
         target_port = 2222

@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='SocketSwap',
-    version='0.1.10',    
+    version='0.1.11',    
     description='SocketSwap is a python package that allows to proxy any third-party libraries traffic through a local TCP Proxy',
     long_description=long_description,
     long_description_content_type='text/markdown',

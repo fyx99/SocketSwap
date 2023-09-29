@@ -4,7 +4,7 @@ SocketSwap
 SocketSwap is a python package that allows to proxy any third-party libraries traffic through a local TCP Proxy
 """
 
-__version__ = "0.1.10"
+__version__ = "0.1.11"
 __author__ = 'fyx99'
 __credits__ = 'No credits'
 

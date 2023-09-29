@@ -28,7 +28,7 @@ def connect_tcp_via_pysocks():
     The socket_factory is provided to handle the creation of a socket to the remote target via the SOCKS5 proxy
     """
     
-    with SocketSwapContext(socket_factory, "127.0.0.1", 2223):
+    with SocketSwapContext(socket_factory, [], "127.0.0.1", 2223):
         # Set up a connection to the PostgreSQL database
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         remote_socket.connect(("127.0.0.1", 2223))

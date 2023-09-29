@@ -7,14 +7,14 @@ from sapcloudconnectorpythonsocket import CloudConnectorSocket
 import socket
 
 
-def socket_factory():
+def socket_factory(token):
     cc_socket = CloudConnectorSocket()
     cc_socket.connect(
         dest_host="virtualhost", 
         dest_port=3333, 
         proxy_host="connectivity-proxy", 
         proxy_port=20003, 
-        token="<token>",
+        token=token,
         location_id="CLOUD_CONNECTOR_LOCATION_ID"
     )
     return cc_socket
@@ -25,8 +25,9 @@ def connect_tcp_via_cloudconnectorsocket():
     It exposes a local proxy on the localhost 127.0.0.1 on port 2223
     The socket_factory is provided to handle the creation of a socket to the remote target via the Cloud Connector
     """
+    token = "<token>"
     
-    with SocketSwapContext(socket_factory, "127.0.0.1", 2223):
+    with SocketSwapContext(socket_factory, [token], "127.0.0.1", 2223):
         # Set up a connection to the PostgreSQL database
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         remote_socket.connect(("127.0.0.1", 2223))
