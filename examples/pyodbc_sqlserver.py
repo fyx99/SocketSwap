@@ -1,8 +1,10 @@
 """
-Demo Szenario - Connecting a mssql client via SocketSwap - redirect traffic locally
+Demo Szenario - Connecting a MS SQL Server (pyodbc) client via SocketSwap - redirect traffic locally
 
 Setup: 
     docker run --rm -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Test@1i2bf34iuf3f3@WEDEWDw" -e "MSSQL_PID=Evaluation" -p 1433:1433  --name sqlpreview --hostname sqlpreview -d mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+    pip install pyodbc
+    Install necessary drivers on the machine (ODBC Driver 17 for SQL Server https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server)
 """
 import socket
 import pyodbc
